@@ -1,0 +1,25 @@
+<decorators defaultdir="/decorators">
+    <excludes>
+        <pattern>/40*.jsp</pattern>
+        <pattern>/login.jsp*</pattern>
+        <pattern>/*ajax=true*</pattern>
+        <pattern>/scripts/dojo/*</pattern>
+        <pattern>/struts/dojo/*</pattern> 
+        <pattern>/resources/*</pattern>
+        <pattern>/occdManager*</pattern>
+        <pattern>/*reviewData*</pattern>
+        <pattern>/*saveDisp*</pattern>
+        <pattern>/*screenPopData*</pattern>
+        <pattern>/cloudagent*</pattern>
+        <pattern>/releaseAgent*</pattern>
+        <pattern>/redisGetNextFreeAgentAction*</pattern>
+        <pattern>/alertCallbacks*</pattern>
+        <pattern>/OutBoundCallBack*</pattern>
+        <pattern>/WEB-INF/pages/status.jsp</pattern>
+    </excludes> 
+    
+    <decorator name="default" page="default.jsp">
+        <pattern>/*</pattern>
+    </decorator>
+    
+</decorators>

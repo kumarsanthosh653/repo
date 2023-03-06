@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MenuConfig>
+    <Displayers>
+        <Displayer name="Velocity" type="net.sf.navigator.displayer.VelocityMenuDisplayer"/>
+    </Displayers>
+    <Menus>
+        <Menu name="MainMenu" title="mainMenu.title" page="/mainMenu.html" roles="ROLE_ADMIN,ROLE_USER"/>
+        <Menu name="UserMenu" title="menu.user" width="40" page="/editProfile.html" roles="ROLE_ADMIN,ROLE_USER"/>
+        <Menu name="AdminMenu" title="menu.admin.users" description="Admin Menu" roles="ROLE_ADMIN" width="40" page="/admin/users.html"/>
+       
+        <!--
+            <Item name="ViewUsers" title="menu.admin.users" page="/admin/users.html"/>
+            <Item name="ActiveUsers" title="mainMenu.activeUsers" page="/admin/activeUsers.html"/>
+            <Item name="ReloadContext" title="menu.admin.reload" page="/admin/reload.html"/>
+            <Item name="FileUpload" title="menu.selectFile" page="/uploadFile.html"/>
+            <Item name="FlushCache" title="menu.flushCache" page="/admin/flushCache.html"/>
+            <Item name="Clickstream" title="menu.clickstream" page="/admin/clickstreams.jsp"/>
+        </Menu>-->
+        <Menu name="Logout" title="user.logout" page="/logout.jsp" roles="ROLE_ADMIN,ROLE_USER"/>
+        
+        <!--Data-START-->
+        <Menu name="DataMenu" title="dataList.title" page="/datas.html" roles="ROLE_ADMIN"/>
+        <!--Data-END-->
+        
+        <!--Campaign-START-->
+        <Menu name="CampaignMenu" title="campaignList.title" page="/campaigns.html" roles="ROLE_ADMIN,ROLE_USER"/>
+        <!--Campaign-END-->
+        <!--Report-START-->
+        <Menu name="ReportMenu" title="reportList.title" page="/reports.html" roles="ROLE_ADMIN,ROLE_USER"/>
+        <!--Report-END-->
+        <!--CallGroup-START-->
+        <Menu name="CallGroupMenu" title="callGroupList.title" page="/callGroups.html" roles="ROLE_ADMIN,ROLE_USER"/>
+        <!--CallGroup-END-->
+        <!--CampaignType-START-->
+        <Menu name="CampaignTypeMenu" title="campaignTypeList.title" page="/campaignTypes.html" width="110" roles="ROLE_ADMIN"/>
+        <!--CampaignType-END-->
+        
+        
+        <!--channelStatus-START-->
+        <Menu name="ChannelStatusMenu" title="channelStatusList.title" page="/channelStatus.html" width="100" roles="ROLE_ADMIN,ROLE_USER"/>
+        <!--channelStatus-END-->
+        
+    </Menus>
+</MenuConfig>

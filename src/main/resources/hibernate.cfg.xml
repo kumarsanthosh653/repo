@@ -1,0 +1,55 @@
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <mapping class="com.ozonetel.occ.model.User"/>
+        <mapping class="com.ozonetel.occ.model.Role"/>
+        <mapping class="com.ozonetel.occ.model.Campaign"/>
+        <mapping class="com.ozonetel.occ.model.Data"/>
+    
+    
+    
+        <mapping class="com.ozonetel.occ.model.Report"/>
+        <mapping class="com.ozonetel.occ.model.Agent"/>
+        <mapping class="com.ozonetel.occ.model.Event"/>
+        <mapping class="com.ozonetel.occ.model.CallDisposition"/>
+        <mapping class="com.ozonetel.occ.model.Disposition"/>
+        <mapping class="com.ozonetel.occ.model.CallBack"/>
+        <mapping class="com.ozonetel.occ.model.PreviewData"/>
+        <mapping class="com.ozonetel.occ.model.PreviewDataAuditLog"/>
+        <mapping class="com.ozonetel.occ.model.DataTemp"/>
+    
+        <mapping class="com.ozonetel.occ.model.Skill"/>
+        <mapping class="com.ozonetel.occ.model.DialNumber"/>
+        <mapping class="com.ozonetel.occ.model.PauseReason"/>
+        <mapping class="com.ozonetel.occ.model.DialOutNumber"/>
+        <mapping class="com.ozonetel.occ.model.Location"/>
+    
+        <mapping class="com.ozonetel.occ.model.CallQueue"/>
+        <mapping class="com.ozonetel.occ.model.FwpNumber"/>
+        <mapping class="com.ozonetel.occ.model.TransferNumber"/>
+        
+        <mapping class="com.ozonetel.occ.model.PreviewDataMap"/>
+        <mapping class="com.ozonetel.occ.model.PreviewExtraData"/>
+        <mapping class="com.ozonetel.occ.model.AgentCallQueue"/>
+        <mapping class="com.ozonetel.occ.model.CallHoldDetail"/>
+        <mapping class="com.ozonetel.occ.model.CustomerCallback"/>
+        <mapping class="com.ozonetel.occ.model.CallConfDetail"/>
+        <mapping class="com.ozonetel.occ.model.UrlMap"/>
+        <mapping class="com.ozonetel.occ.model.SMSReport"/>
+        <mapping class="com.ozonetel.occ.model.CallDrop"/>
+        <mapping class="com.ozonetel.occ.model.SMSTemplate"/>
+        <mapping class="com.ozonetel.occ.model.ChatLog"/>
+        <mapping class="com.ozonetel.occ.model.ChatDetails"/>
+        <mapping class="com.ozonetel.occ.model.UserIntegration" />
+        <mapping class="com.ozonetel.occ.model.Integration" />
+        <mapping class="com.ozonetel.occ.model.IvrFlow"/>
+        <mapping class="com.ozonetel.occ.model.AgentEventCache"/>
+        <mapping class="com.ozonetel.occ.model.AgentFreeStatus"/>
+        <mapping class="com.ozonetel.occ.model.CampaignConfig"/>
+        <mapping class="com.ozonetel.occ.model.CampaignHoldMusic"/>
+        <mapping class="com.ozonetel.occ.model.CampaignConfiguration" />
+        <!--<mapping class="com.ozonetel.occ.model.AppAudioFiles"/>-->
+    </session-factory>
+</hibernate-configuration>

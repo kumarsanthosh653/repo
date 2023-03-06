@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MenuConfig>
+    <Displayers>
+        <Displayer name="Velocity" type="net.sf.navigator.displayer.VelocityMenuDisplayer"/>
+    </Displayers>
+    <Menus>
+        <Menu name="MainMenu" title="mainMenu.title" page="/mainMenu.html" roles="ROLE_ADMIN,ROLE_USER"/>
+        <Menu name="UserMenu" title="menu.user" width="40" page="/editProfile.html" roles="ROLE_ADMIN,ROLE_USER"/>
+        <Menu name="AdminMenu" title="menu.admin.users" description="Admin Menu" roles="ROLE_ADMIN" width="40" page="/admin/users.html"/>
+       
+        <Menu name="Logout" title="user.logout" page="/logout.jsp" roles="ROLE_ADMIN,ROLE_USER"/>
+        
+        <!--Data-START-->
+        <Menu name="DataMenu" title="dataList.title" page="/datas.html" roles="ROLE_ADMIN"/>
+        <!--Data-END-->
+        
+         <!--Agent-START-->
+        <Menu name="AgentMenu" title="agentList.title" page="/agents.html" roles="ROLE_ADMIN,ROLE_USER"/>
+        <!--Agent-END-->
+        
+        <!--Campaign-START-->
+        <Menu name="CampaignMenu" title="campaignList.title" page="/campaigns.html" roles="ROLE_ADMIN,ROLE_USER"/>
+        <!--Campaign-END-->
+
+        <!--Campaign-START-->
+        <Menu name="InBoundCampaignMenu" title="InBoundcampaignList.title" page="/inBoundCampaigns.html" roles="ROLE_ADMIN,ROLE_USER"/>
+        <!--Campaign-END-->
+        <!--Report-START-->
+        <Menu name="ReportMenu" title="reportList.title" roles="ROLE_ADMIN,ROLE_USER">
+            <Item name="CDRReportMenu" title="menu.report.cdr" page="/reports.html" roles="ROLE_ADMIN,ROLE_USER"/>
+            <Item name="CallReordings" title="menu.report.callrecordings" page="/crReport.html" roles="ROLE_ADMIN,ROLE_USER"/>
+            <!--<Item name="PreviewDataReportMenu" title="menu.report.previewData" page="/previewReports.html" roles="ROLE_ADMIN,ROLE_USER"/>
+            <Item name="AgentReportMenu" title="menu.report.agent" page="/agentReports.html" roles="ROLE_ADMIN,ROLE_USER"/>
+            <Item name="CallDispositionMenu" title="menu.report.callDisposition" page="/callDispositions.html" roles="ROLE_ADMIN,ROLE_USER"/>
+            <Item name="AgentPerformanceMenu" title="menu.report.agentPerformance" roles="ROLE_ADMIN,ROLE_USER"/>-->
+            <Item name="AgentCampaignPerformanceMenu" title="menu.report.agentPerformance.campaign" page="/agentPerformanceReport.html" roles="ROLE_ADMIN,ROLE_USER"/>
+            <Item name="AgentDatePerformanceMenu" title="menu.report.agentPerformance.date" page="/agentPerformanceDateReport.html" roles="ROLE_ADMIN,ROLE_USER"/>
+            <Item name="skillPerformanceMenu" title="menu.report.skillPerformance" page="/skillPerformanceReport.html" roles="ROLE_ADMIN,ROLE_USER"/>
+            <Item name="AhtReportMenu" title="menu.report.aht" page="/ahtReport.html" roles="ROLE_ADMIN,ROLE_USER"/>
+            <Item name="AgentLoginReportMenu" title="menu.report.agentLogin" page="/agentLoginReport.html" roles="ROLE_ADMIN,ROLE_USER"/>
+            <Item name="AgentSessionMenu" title="menu.report.agentSession" page="/agentSessionReport.html" roles="ROLE_ADMIN,ROLE_USER"/>
+            <Item name="callDispositionReportMenu" title="menu.report.callDisposition" page="/callDispositionReport.html" roles="ROLE_ADMIN,ROLE_USER"/>
+            <!--<Item name="DayCampaignMenu" title="menu.report.campaign.dayWise" page="/campaignDayWiseReport.html" roles="ROLE_ADMIN,ROLE_USER"/>-->
+            <!--<Item name="DateCampaignMenu" title="menu.report.campaign.dateWise" page="/campaignDateWiseReport.html" roles="ROLE_ADMIN,ROLE_USER"/>-->
+            <Item name="systemReportMenu" title="menu.report.systemReport" page="/systemReport.html" roles="ROLE_ADMIN,ROLE_USER"/>
+        </Menu>
+        <!--Report-END-->
+        
+        
+        
+        <!--channelStatus-START-->
+        <Menu name="ChannelStatusMenu" target="_blank" title="channelStatusList.title" page="/channelStatus.html?popup=true" width="100" roles="ROLE_ADMIN,ROLE_USER"/>
+        <!--channelStatus-END-->
+        
+        <!--channelStatus-START-->
+        <Menu name="ChannelMenu"  target="_blank" title="channelsList.title" page="/channelList.html?popup=true" width="100" roles="ROLE_ADMIN,ROLE_USER"/>
+        <!--channelStatus-END-->
+        
+        
+        <!--channelStatus-START-->
+        <Menu name="dbMenu" title="dbMenu.title" page="/dbMenu.html" width="100" roles="ROLE_ADMIN,ROLE_USER"/>
+        <!--channelStatus-END-->
+       
+        <!--Event-START-->
+        <Menu name="EventMenu" title="eventList.title" page="/events.html"/>
+        <!--Event-END-->
+        <!--Disposition-START-->
+        <Menu name="DispositionMenu" title="dispositionList.title" roles="ROLE_ADMIN,ROLE_USER" page="/dispositions.html"/>
+        <!--Disposition-END-->
+        <!--CallBack-START-->
+        <Menu name="CallBackMenu" title="callBackList.title" page="/callBacks.html" roles="ROLE_ADMIN,ROLE_USER"/>
+        <!--CallBack-END-->
+        <!--PreviewData-START-->
+        <Menu name="PreviewDataMenu" title="previewDataList.title" page="/previewDatas.html" roles="ROLE_ADMIN,ROLE_USER"/>
+        <!--PreviewData-END-->
+        
+        <!--Skill-START-->
+        <Menu name="SkillMenu" title="skillList.title" page="/skills.html"/>
+        <Menu name="cloudReport" title="cloudReport.title" url="http://172.16.15.120:8080/cloudReport?popNew=true" target="_blank" />
+        <!--Skill-END-->
+        <!--DialNumber-START-->
+        <Menu name="DialNumberMenu" title="dialNumberList.title" page="/dialNumbers.html"/>
+        <!--DialNumber-END-->
+        <!--PauseReason-START-->
+        <Menu name="PauseReasonMenu" title="pauseReasonList.title" page="/pauseReasons.html" roles="ROLE_ADMIN,ROLE_USER"/>
+        <!--PauseReason-END-->
+        <!--DialOutNumber-START-->
+        <Menu name="DialOutNumberMenu" title="dialOutNumberList.title" page="/dialOutNumbers.html" roles="ROLE_ADMIN,ROLE_USER"/>
+        <!--DialOutNumber-END-->
+        <!--Location-START-->
+        <Menu name="LocationMenu" title="locationList.title" page="/locations.html" roles="ROLE_ADMIN,ROLE_USER"/>
+        <!--Location-END-->
+        
+        <!--CallQueue-START-->
+        <Menu name="CallQueueMenu" title="callQueueList.title" page="/callQueues.html"/>
+        <!--CallQueue-END-->
+        <!--FwpNumber-START-->
+        <Menu name="FwpNumberMenu" title="fwpNumberList.title" page="/fwpNumbers.html" roles="ROLE_ADMIN,ROLE_USER"/>
+        <!--FwpNumber-END-->
+        <!--TransferNumber-START-->
+        <Menu name="TransferNumberMenu" title="transferNumberList.title" page="/transferNumbers.html" roles="ROLE_ADMIN,ROLE_USER"/>
+        <!--TransferNumber-END-->
+    </Menus>
+</MenuConfig>

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx" 
+       xmlns:context="http://www.springframework.org/schema/context" 
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+       default-lazy-init="true">
+
+    <!-- =================================================================== -->
+    <!-- AOP: Configuration and Aspects                                      -->
+    <!-- =================================================================== -->
+    <aop:config>
+        <!--<aop:advisor id="userManagerTx" advice-ref="userManagerTxAdvice" pointcut="execution(* *..service.UserManager.*(..)) &amp;&amp; !execution(* *..service.ToolBarManager*.*(..))" order="0"/>-->        
+        <!--<aop:advisor id="userManagerSecurity" advice-ref="userSecurityAdvice" pointcut="execution(* *..service.UserManager.saveUser(..))" order="1"/>-->
+        <aop:advisor id="managerTx" advice-ref="txAdvice"
+            pointcut="execution(* *..service.*Manager.*(..)) 
+              &amp;&amp; !execution(* *..service.OCCManager*.*(..))
+              &amp;&amp; !execution(* *..service.Command*.*(..))
+              &amp;&amp; !execution(* *..service.ToolBarManager*.*(..))
+              &amp;&amp; !execution(* *..service.TelephonyManager*.*(..))
+              &amp;&amp; !execution(* *..service.RedisManager*.*(..))
+              &amp;&amp; !execution(* *..service.AgentAlertsManager*.*(..)) 
+              &amp;&amp; !execution(* *..service.AgentTransferManager*.*(..))
+              &amp;&amp; !execution(* *..service.PhoneTransferManager*.*(..)) 
+              &amp;&amp; !execution(* *..service.AgentManager*.*(..))    
+              &amp;&amp; !execution(* *..service.CallQueueManager*.*(..))    
+              &amp;&amp; !execution(* *..service.FwpNumberManager*.*(..))       
+              &amp;&amp; !execution(* *..service.Command*.*(..))
+              &amp;&amp; !execution(* *..service.PreviewDialerManager*.*(..))"
+                     order="0"/>
+    
+
+    </aop:config>
+    
+
+    <!-- Enable @Transactional support -->
+    <tx:annotation-driven/>
+  
+    <!-- Enable @AspectJ support -->
+    <aop:aspectj-autoproxy/>
+    
+    <!-- Enable @Configured support -->
+    <aop:spring-configured/>
+  
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <!-- Read-only commented out to make things easier for end-users -->
+            <!-- http://issues.appfuse.org/browse/APF-556 -->
+            <!--tx:method name="get*" read-only="true"/-->
+            <tx:method name="*"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <tx:advice id="userManagerTxAdvice">
+        <tx:attributes>
+            <tx:method name="save*" rollback-for="UserExistsException"/>
+        </tx:attributes>
+    </tx:advice>
+    
+    <bean id="redisLoggingAdvice" class="com.ozonetel.occ.advice.RedisLoggingAdvice" />
+    
+    <bean id="userSecurityAdvice" class="com.ozonetel.occ.service.UserSecurityAdvice"/>
+    
+    <!-- =================================================================== -->
+    <!-- Mail: Sender and Velocity configuration                             -->
+    <!-- =================================================================== -->
+    <bean id="mailEngine" class="com.ozonetel.occ.service.MailEngine">
+        <property name="mailSender" ref="mailSender"/>
+        <property name="velocityEngine" ref="velocityEngine"/>
+        <property name="from" value="${mail.default.from}"/>
+    </bean>
+
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="${mail.host}"/>
+        <property name="defaultEncoding" value="UTF-8"/> 
+        <property name="username" value="${mail.username}"/>
+        <property name="password" value="${mail.password}"/>
+        <property name="javaMailProperties">
+            <value>
+                mail.smtp.auth=true
+            </value>
+        </property>
+    </bean>
+
+    <!-- Configure Velocity for sending e-mail -->
+    <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+        <property name="velocityProperties">
+            <props>
+                <prop key="resource.loader">class</prop>
+                <prop key="class.resource.loader.class">
+                    org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+                </prop>
+                <prop key="velocimacro.library"></prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage" scope="prototype">
+        <property name="from" value="${mail.default.from}"/>
+    </bean>
+
+    <!-- =================================================================== -->
+    <!-- Security class from Spring Security - used to configure Password    -->
+    <!-- Encryption in UserManagerImpl. Can override in security.xml.        -->
+    <!-- =================================================================== -->
+    <bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder"/>
+
+    <!-- =================================================================== -->
+    <!-- Managers: For accessing DAOs                                        -->
+    <!-- =================================================================== -->
+    <bean id="manager" class="com.ozonetel.occ.service.impl.UniversalManagerImpl">
+        <property name="dao" ref="universalDao"/>
+    </bean>
+    
+    <bean id="lookupManager" class="com.ozonetel.occ.service.impl.LookupManagerImpl">
+        <property name="lookupDao" ref="lookupDao"/>
+    </bean>
+
+    <bean id="userManager" class="com.ozonetel.occ.service.impl.UserManagerImpl">
+        <property name="userDao" ref="userDao"/>
+        <property name="passwordEncoder" ref="passwordEncoder"/>
+    </bean>
+
+    <bean id="roleManager" class="com.ozonetel.occ.service.impl.RoleManagerImpl">
+        <property name="roleDao" ref="roleDao"/>
+    </bean>
+   
+   <bean id="occManager" class="com.ozonetel.occ.service.impl.OCCManagerImpl">
+         <property name="dao" ref="universalDao"/>
+         <property name="agentManager" ref="agentManager"/>
+    </bean>
+   
+   <bean id="toolBarManager" class="com.ozonetel.occ.service.impl.ToolBarManagerImpl" >
+       <property name="ticketSystemURL" value="${tktsysURL}" />
+       <property name="mailEngine" ref="mailEngine" />
+       <property name="agentManager" ref="agentManager"/>
+       <property name="callBackManager" ref="callBackManager" />
+       <property name="campaignManager" ref="campaignManager" />
+       <property name="dispositionManager" ref="dispositionManager" />
+       <property name="eventManager" ref="eventManager" />
+       <property name="fwpNumberManager" ref="fwpNumberManager" />
+       <property name="occManager" ref="occManager" />
+       <property name="pauseReasonManager" ref="pauseReasonManager" />
+       <property name="previewDataManager" ref="previewDataManager" />
+       <property name="previewExtraDataManager" ref="previewExtraDataManager" />
+       <property name="redisAgentManager" ref="redisAgentManager" />
+       <property name="redisReportManager" ref="redisReportManager" />
+       <property name="reportManager" ref="reportManager" />
+       <property name="sMSManager" ref="sMSManager" />
+       <property name="sMSTemplateManager" ref="sMSTemplateManager" />
+       <property name="transferNumberManager" ref="transferNumberManager" />
+       <property name="userManager" ref="userManager" />
+    </bean>
+   
+    <!--<bean id="campaignScheduler" class="com.ozonetel.occ.service.impl.CampaignSchedulerImpl">
+    	<property name="dao" ref="universalDao"/>
+    </bean>-->
+    
+    <bean id="occAsteriskServer" class="com.ozonetel.occ.service.impl.OCCAsteriskServer">
+    	<!--<property name="hostname" value="172.16.15.183"/>-->
+        <!-- test bid Connections -->
+    	<property name="hostname" value="172.16.15.120"/>
+    	<property name="username" value="bimal"/>
+    	<property name="password" value="bimal123"/>
+    	<property name="maxChannelCount" value="10"/>
+    	<property name="port" value="1"/>
+    	
+    	<property name="screenPopUrl" value="http://172.16.15.120:8080/O3CallControlweb"/>
+    	<property name="maxThreadCount" value="10"/>
+        <!-- production bid Connections -->
+    	<!--<property name="hostname" value="172.16.5.110"/>
+    	<property name="username" value="peniel"/>
+    	<property name="password" value="peniel"/>
+    	<property name="maxChannelCount" value="10"/>
+    	<property name="port" value="1"/>
+    	<property name="screenPopUrl" value="http://172.16.15.203:8080/O3CallControlweb"/>
+    	<property name="maxThreadCount" value="10"/>-->
+    </bean>
+    
+    <!-- 
+    <bean id="occManagerConnection" class="com.ozonetel.occ.service.impl.OCCManagerConnection">
+    	<property name="hostname" value="172.16.15.203"/>
+    	<property name="username" value="nbabu"/>
+    	<property name="password" value="nbabu123"/>
+    </bean>
+    
+     <bean id="occManagerConnectionFactory" class="com.ozonetel.occ.service.impl.OCCManagerConnectionFactory">
+    	<property name="hostname" value="172.16.15.203"/>
+    	<property name="username" value="nbabu"/>
+    	<property name="password" value="nbabu123"/>
+    </bean>
+
+	
+       <bean id="callDetailsQueue" class="com.ozonetel.occ.service.impl.CallDetailsQueue">
+               <property name="dao" ref="universalDao"/>
+   </bean>
+    -->
+    <!-- Add new Managers here -->
+    
+    <!--<bean id="scheduler"
+          class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="applicationContextSchedulerContextKey" value="applicationContext"/>
+        <property name="quartzProperties">
+            <props>
+                <prop key="org.quartz.scheduler.instanceName">CampaignScheduler</prop>
+                <prop key="org.quartz.scheduler.instanceId">AUTO</prop>
+                <prop key="org.quartz.threadPool.class">org.quartz.simpl.SimpleThreadPool</prop>
+                <prop key="org.quartz.threadPool.threadCount">10</prop>      
+                <prop key="org.quartz.jobStore.class">org.quartz.impl.jdbcjobstore.JobStoreTX</prop>
+                <prop key="org.quartz.jobStore.isClustered">false</prop>
+                <prop key="org.quartz.jobStore.useProperties">false</prop>
+                <prop key="org.quartz.jobStore.tablePrefix">QRTZ_</prop>
+                <prop key="org.quartz.jobStore.driverDelegateClass">org.quartz.impl.jdbcjobstore.StdJDBCDelegate</prop>      
+                <prop key="org.quartz.jobStore.dataSource">Dialer</prop> 
+                <prop key="org.quartz.jobStore.selectWithLockSQL">SELECT * FROM {0}LOCKS WHERE LOCK_NAME = ? FOR UPDATE</prop>
+            </props>
+        </property>
+    </bean> -->
+    
+</beans>

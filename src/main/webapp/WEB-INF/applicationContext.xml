@@ -1,0 +1,830 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
+       default-lazy-init="true">
+
+    <!--<bean class ="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>-->
+
+    
+
+    <!--DataDao-START-->
+    <bean id="dataDao" class="com.ozonetel.occ.dao.hibernate.DataDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <!--DataDao-END-->
+
+    <bean id="messageHandler" class="com.ozonetel.occ.webapp.servlet.MessageHandler">
+    </bean>
+    
+    <bean id="chatHandler" class="com.ozonetel.occ.webapp.servlet.ChatHandler">
+        <property name="chatClientMsgSrvr" value="${url.chatClientMsgSrvr}" />
+    </bean>
+
+    <!--<bean id="clientInfoLoggingAdvice" class="com.ozonetel.occ.advice.ClientInfoLoggingAdvice" />-->
+
+    <!--CampaignDao-START-->
+    <bean id="campaignDao" class="com.ozonetel.occ.dao.hibernate.CampaignDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <!--CampaignDao-END-->
+
+    <!-- CampaignHoldMusicDao DAO Start -->
+    <bean id="CampaignHoldMusicDao" class="com.ozonetel.occ.dao.hibernate.CampaignHoldMusicDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <!-- CampaignHoldMusicDao Ends -->
+    
+    <!-- CampaignConfig DAO Start -->
+    <bean id="CampaignConfigDao" class="com.ozonetel.occ.dao.hibernate.CampaignConfigDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <!-- CampaignConfig DAO Ends -->
+    
+    <bean id="callbacksExecutorService" class="com.ozonetel.occ.service.impl.CallbacksExecutorServiceImpl">
+        <property name="reportManager" ref="reportManager" />
+        <property name="httpUtils" ref="httpUtils" />
+    </bean>
+    
+    <bean id="httpUtils" class="com.ozonetel.occ.util.HttpUtils"  />
+
+    <!--ReportDao-START-->
+    <bean id="reportDao" class="com.ozonetel.occ.dao.hibernate.ReportDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="campaignDao" ref="campaignDao"/> <!-- for using campaign dao in reportdao -->
+    </bean>
+    <!--ReportDao-END-->
+
+    
+
+    <!--AgentDao-START-->
+    <bean id="agentDao" class="com.ozonetel.occ.dao.hibernate.AgentDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory2"/>
+    </bean>
+    <!--AgentDao-END-->
+
+    <bean id="agentFreeStatusDao" class="com.ozonetel.occ.dao.hibernate.AgentFreeStatusDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="agentAlertsManager" class="com.ozonetel.occ.service.impl.AgentAlertsManagerImpl">
+        <property name="agentManager" ref="agentManager" />
+    </bean>
+
+    <bean id="agentEventNotifier" class="com.ozonetel.occ.service.impl.AgentEventNotifierImpl"/>
+        
+
+    <!--EventDao-START-->
+    <bean id="eventDao" class="com.ozonetel.occ.dao.hibernate.EventDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <!--EventDao-END-->
+
+    <!--DispositionDao-START-->
+    <bean id="dispositionDao" class="com.ozonetel.occ.dao.hibernate.DispositionDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <!--DispositionDao-END-->
+    
+    
+    
+  
+  
+    <bean id="callDispositionDao" class="com.ozonetel.occ.dao.hibernate.CallDispositionDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    
+    
+
+    <!--CallBackDao-START-->
+    <bean id="callBackDao" class="com.ozonetel.occ.dao.hibernate.CallBackDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <!--CallBackDao-END-->
+
+    <!--PreviewDataDao-START-->
+    <bean id="previewDataDao" class="com.ozonetel.occ.dao.hibernate.PreviewDataDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <!--PreviewDataDao-END-->
+
+    <!--previewDataAuditLogDao-START-->
+    <bean id="previewDataAuditLogDao" class="com.ozonetel.occ.dao.hibernate.PreviewDataAuditLogDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <!--previewDataAuditLogDao-END-->
+
+    
+
+    <!--SkillDao-START-->
+    <bean id="skillDao" class="com.ozonetel.occ.dao.hibernate.SkillDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <!--SkillDao-END-->
+
+    <!--DialNumberDao-START-->
+    <bean id="dialNumberDao" class="com.ozonetel.occ.dao.hibernate.DialNumberDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <!--DialNumberDao-END-->
+
+    <!--PauseReasonDao-START-->
+    <bean id="pauseReasonDao" class="com.ozonetel.occ.dao.hibernate.PauseReasonDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <!--PauseReasonDao-END-->
+
+    <!--DialOutNumberDao-START-->
+    <bean id="dialOutNumberDao" class="com.ozonetel.occ.dao.hibernate.DialOutNumberDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <!--DialOutNumberDao-END-->
+
+    <!--LocationDao-START-->
+    <bean id="locationDao" class="com.ozonetel.occ.dao.hibernate.LocationDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <!--LocationDao-END-->
+
+
+
+    <!--CallQueueDao-START-->
+    <bean id="callQueueDao" class="com.ozonetel.occ.dao.hibernate.CallQueueDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory2"/>
+    </bean>
+    <!--CallQueueDao-END-->
+
+   
+    <!--FwpNumberDao-START-->
+    <bean id="fwpNumberDao" class="com.ozonetel.occ.dao.hibernate.FwpNumberDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory2"/>
+    </bean>
+    <!--FwpNumberDao-END-->
+
+    <!--TransferNumberDao-START-->
+    <bean id="transferNumberDao" class="com.ozonetel.occ.dao.hibernate.TransferNumberDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <!--TransferNumberDao-END-->
+    
+    <!--HoldDetailDao-START-->
+    <bean id="holdDetailDao" class="com.ozonetel.occ.dao.hibernate.HoldDetailDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <!--HoldDetailDao-END-->
+
+
+    <!-- Add new DAOs here -->
+
+    <!--TicketDao-START-->
+    <!--    <bean id="ticketDao" class="com.ozonetel.occ.dao.hibernate.TicketDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>-->
+    <!--TicketDao-END-->
+    
+    <!--DataManager-START-->
+    <bean id="dataManager" class="com.ozonetel.occ.service.impl.DataManagerImpl">
+        <constructor-arg ref="dataDao"/>
+    </bean>
+    <!--DataManager-END-->
+
+    <!--CampaignManager-START-->
+    <bean id="campaignManager" class="com.ozonetel.occ.service.impl.CampaignManagerImpl">
+        <constructor-arg ref="campaignDao"/>
+    </bean>
+    <!--CampaignManager-END-->
+    
+    <!--CampaignHoldMusicManager-START-->
+    <bean id="CampaignHoldMusicManager" class="com.ozonetel.occ.service.impl.CampaignHoldMusicManagerImpl">
+        <constructor-arg ref="CampaignHoldMusicDao"/>
+    </bean>
+    <!--CampaignHoldMusicManager-END-->
+    
+    <!--CampaignConfigManager-START-->
+    <bean id="CampaignConfigManager" class="com.ozonetel.occ.service.impl.CampaignConfigManagerImpl">
+        <constructor-arg ref="CampaignConfigDao"/>
+    </bean>
+    <!--CampaignConfigManager-END-->
+
+    <!--ReportManager-START-->
+    <bean id="reportManager" class="com.ozonetel.occ.service.impl.ReportManagerImpl">
+        <constructor-arg ref="reportDao"/>
+        <property name="redisReportManager" ref="redisReportManager" />
+    </bean>
+    <!--ReportManager-END-->
+
+    <bean id="sMSManager" class="com.ozonetel.occ.service.impl.SMSManagerImpl">
+        <property name="httpUtils" ref="httpUtils" />
+        <property name="sMSReportManager" ref="sMSReportManager" />
+        <property name="userManager" ref="userManager" />
+    </bean>
+
+
+    <bean id="agentTokenManager" class="com.ozonetel.occ.service.impl.AgentTokenManagerImpl">
+        <property name="agentManager" ref="agentManager" />
+    </bean>
+
+    <!--AgentManager-START-->
+    <bean id="agentManager" class="com.ozonetel.occ.service.impl.AgentManagerImpl">
+        <constructor-arg ref="agentDao"/>
+        <!--<constructor-arg ref="agentFreeStatusDao"/>-->
+        <property name="redisAgentManager" ref="redisAgentManager" />
+        <property name="fwpNumberManager" ref="fwpNumberManager" />
+        <property name="eventManager" ref="eventManager" />
+        <property name="agentTokenManager" ref="agentTokenManager" />
+        <property name="redisReportManager" ref="redisReportManager" />
+        <property name="previewDialerManager" ref="previewDialerManager" />
+        <property name="appProperty" ref="appProperty" />
+    </bean>
+    
+    <bean id="previewDialerManager" class="com.ozonetel.occ.service.impl.PreviewDialerManagerImpl">
+        <property name="redisAgentManager" ref="redisAgentManager" /> 
+        <property name="manualDialService" ref="manualDialService" />
+    </bean>
+    <!--AgentManager-END-->
+    
+    
+    <!-- Toolbar command-START-->
+    <!--    <bean id="agentLoginCommand" class="com.ozonetel.occ.service.impl.AgentLoginCommand" autowire="byName">
+        <property name="agentManager" ref="agentManager" /> 
+        <property name="eventManager" ref="eventManager" /> 
+        <property name="fwpNumberManager" ref="fwpNumberManager" /> 
+        <property name="redisAgentManager" ref="redisAgentManager" /> 
+        <property name="sMSTemplateManager" ref="sMSTemplateManager" /> 
+        <property name="userManager" ref="userManager" /> 
+    </bean>-->
+    <!-- Toolbar command-END -->
+    
+    <bean id="facebookChatService" class="com.ozonetel.occ.service.chat.impl.FacebookChatServiceImpl">
+        <!--<property name="eventManager" ref="eventManager" />-->
+        <!--<property name="agentManager" ref="agentManager"/>-->
+        <property name="chatService" ref="chatService"/>
+        <property name="redisAgentManager" ref="redisAgentManager" />
+        <property name="userManager" ref="userManager" />
+        <property name="campaignManager" ref="campaignManager" />
+        <!--<property name="dispositionManager" ref="dispositionManager" />--> 
+        <!--<property name="callQueueManager" ref="callQueueManager"/>-->
+        <property name="agentFinderService" ref="agentFinderService"/>
+        <property name="fbUrl" value="${url.fbmsngr}" />
+        <property name="skillManager" ref="skillManager" />
+    </bean>
+    
+    <bean id="dialer" class="com.ozonetel.occ.service.impl.DialerImpl">
+        <property name="agentManager" ref="agentManager" />
+        <property name="appProperty" ref="appProperty" />
+        <property name="previewDataManager" ref="previewDataManager" />
+    </bean>
+    
+    <bean id="manualDialService" class="com.ozonetel.occ.service.impl.ManualDialServiceImpl" autowire="byName">
+        <property name="appProperty" ref="appProperty"/>
+        <property name="campaignManager" ref="campaignManager"/>
+        <property name="dndUtils" ref="dndUtils" />
+        <property name="agentManager" ref="agentManager" />
+        <property name="reportManager" ref="reportManager" />
+        <property name="phoneNumberUtil" ref="phoneNumberUtil" />
+        <property name="campaignConfigurationManager" ref="campaignConfigurationManager" />
+    </bean>
+
+    <bean id="telephonyManager" class="com.ozonetel.occ.service.impl.TelephonyManagerImpl" >
+        <property name="agentManager" ref="agentManager" />
+        <property name="userManager" ref="userManager" />
+        <property name="callConfDetailManager" ref="callConfDetailManager" />
+        <property name="conferenceCallbackUrl" value="${url.confcallback}" />
+        <property name="holdDetailManager" ref="holdDetailManager" />
+        <property name="telephonyApiUrl" value="${kookooTeleApiUrl}" />
+        <property name="kooKooAgentBridgeUrl" value="${kooKooAgentBridgeUrl}" />
+        <property name="agentBridgeIvrUrl" value="${agentBridgeIvrUrl}" />
+        <property name="agentBridgeCallBackUrl" value="${agentBridgeCallBackUrl}" />
+        <property name="redisAgentManager" ref="redisAgentManager" />
+        <property name="reportManager" ref="reportManager" />
+    </bean>
+    
+    <bean id="skillTransferManager" class="com.ozonetel.occ.service.impl.SkillTransferManagerImpl">
+        <property name="reportManager" ref="reportManager" />
+        <property name="skillManager" ref="skillManager"/>
+    </bean>
+    
+    <bean id="agentTransferManager" class="com.ozonetel.occ.service.impl.AgentTransferManagerImpl">
+        <property name="agentManager" ref="agentManager" />
+        <property name="agentTokenManager" ref="agentTokenManager" />
+        <property name="reportManager" ref="reportManager" />
+        <property name="telephonyManager" ref="telephonyManager" />
+        <property name="redisAgentManager" ref="redisAgentManager" />
+    </bean>
+    
+    <bean id="phoneTransferManager" class="com.ozonetel.occ.service.impl.PhoneTransferManagerImpl">
+        <property name="agentTokenManager" ref="agentTokenManager" />
+        <property name="reportManager" ref="reportManager" />
+        <property name="telephonyManager" ref="telephonyManager" />
+    </bean>
+
+
+    <bean id="agentCommandExecutor" class="com.ozonetel.occ.service.impl.AgentCommandExecutorImpl" />
+    
+    <bean id="dndUtils" class="com.ozonetel.occ.util.DndUtils">
+        <property name="dndCheckUrl" value="${url.dndCheck}" />
+    </bean>
+
+    <!--   COMMENTing as this is not used any where as pavan confirmed
+ <bean id="agentMessageHandler" class="com.ozonetel.occ.service.impl.AgentMessageHandler">
+        <property name="agentManager" ref="agentManager" />
+        <property name="agentCommandExecutor" ref="agentCommandExecutor" />
+        <property name="agentTransferManager" ref="agentTransferManager" />
+        <property name="callBackManager" ref="callBackManager" />
+        <property name="campaignManager" ref="campaignManager" />
+        <property name="dialer" ref="dialer" />
+        <property name="dispositionManager" ref="dispositionManager" />
+        <property name="mailEngine" ref="mailEngine" />
+        <property name="manualDialService" ref="manualDialService" />
+        <property name="pauseReasonManager" ref="pauseReasonManager" />
+        <property name="phoneTransferManager" ref="phoneTransferManager" />
+        <property name="previewDataManager" ref="previewDataManager" />
+        <property name="previewExtraDataManager" ref="previewExtraDataManager" />
+        <property name="reportManager" ref="reportManager" />
+        <property name="sMSManager" ref="sMSManager" />
+        <property name="sMSTemplateManager" ref="sMSTemplateManager" />
+        <property name="skillManager" ref="skillManager" />
+        <property name="telephonyManager" ref="telephonyManager" />
+        <property name="ticketManager" ref="ticketManager" />
+        <property name="transferNumberManager" ref="transferNumberManager" />
+        <property name="userManager" ref="userManager" />
+    </bean>-->
+
+
+    <bean id="lockService" class="com.ozonetel.occ.util.LockServiceImpl" />
+    <!--EventManager-START-->
+    <bean id="eventManager" class="com.ozonetel.occ.service.impl.EventManagerImpl">
+        <constructor-arg ref="eventDao"/>
+        <property name="redisAgentManager" ref="redisAgentManager" />
+        <property name="agentEventCacheManager"  ref="agentEventCacheManager"/>
+        <property name="userManager" ref="userManager" />
+        <property name="lockService" ref="lockService" />
+        <property name="beanstalkService" ref="beanstalkService" />
+    </bean>
+    <!--EventManager-END-->
+   
+    <bean id="callDispositionManager" class="com.ozonetel.occ.service.impl.GenericManagerImpl">
+        <constructor-arg>
+            <bean class="com.ozonetel.occ.dao.hibernate.GenericDaoHibernate">
+                <constructor-arg value="com.ozonetel.occ.model.CallDisposition"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="customerCallbacksManager" class="com.ozonetel.occ.service.impl.GenericManagerImpl">
+        <constructor-arg>
+            <bean class="com.ozonetel.occ.dao.hibernate.GenericDaoHibernate">
+                <constructor-arg value="com.ozonetel.occ.model.CustomerCallback" />
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+    
+   
+    <bean id="previewExtraDataDao" class="com.ozonetel.occ.dao.hibernate.PreviewExtraDataDaoHibernate" >
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+        
+    
+   
+    <bean id="previewExtraDataManager" class="com.ozonetel.occ.service.impl.PreviewExtraDataManagerImpl">
+        <constructor-arg ref="previewExtraDataDao" />  
+        <property name="campaignManager" ref="campaignManager" />      
+    </bean>
+    
+    <bean id="callConfDetailManager" class="com.ozonetel.occ.service.impl.GenericManagerImpl">
+        <constructor-arg>
+            <bean class="com.ozonetel.occ.dao.hibernate.GenericDaoHibernate">
+                <constructor-arg value="com.ozonetel.occ.model.CallConfDetail"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+     
+    <bean id="callDispManager" class="com.ozonetel.occ.service.impl.CallDispositionManagerImpl">
+        <constructor-arg ref="callDispositionDao"/>
+        
+    </bean>
+    
+    <bean id="campaignConfigurationManager" class="com.ozonetel.occ.service.impl.GenericManagerImpl">
+        <constructor-arg>
+            <bean class="com.ozonetel.occ.dao.hibernate.GenericDaoHibernate">
+                <constructor-arg value="com.ozonetel.occ.model.CampaignConfiguration"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+    
+     
+    
+    <!--DispositionManager-START-->
+    <bean id="dispositionManager" class="com.ozonetel.occ.service.impl.DispositionManagerImpl">
+        <constructor-arg ref="dispositionDao"/>
+        <property name="reportManager" ref="reportManager" />
+        <property name="userManager" ref="userManager" />
+        <property name="agentManager" ref='agentManager' />
+    </bean>
+    <!--DispositionManager-END-->
+
+
+    <!-- REDIS Managers -START-->
+    <bean id="redisAgentManager" class="com.ozonetel.occ.service.impl.RedisAgentManagerImpl">
+        <constructor-arg>
+            <bean class="com.ozonetel.occ.dao.redis.RedisDaoImpl">
+                <constructor-arg  value="com.ozonetel.occ.model.Agent" />
+                <property name="pool" ref="jedisSentinelPool" />
+            </bean>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="redisReportManager" class="com.ozonetel.occ.service.impl.RedisManagerImpl">
+        <constructor-arg>
+            <bean class="com.ozonetel.occ.dao.redis.RedisDaoImpl">
+                <constructor-arg  value="com.ozonetel.occ.model.Report" />
+                <property name="pool" ref="jedisSentinelPool" />
+            </bean>
+        </constructor-arg>
+    </bean>
+    <!--    <bean id="redisEventManager" class="com.ozonetel.occ.service.impl.RedisManagerImpl">
+        <constructor-arg>
+            <bean class="com.ozonetel.occ.dao.redis.RedisDaoImpl">
+                <constructor-arg  value="com.ozonetel.occ.model.Event" />
+                <property name="pool" ref="jedisSentinelPool" />
+            </bean>
+        </constructor-arg>
+    </bean>
+    -->
+    <bean id="redisCallQueueManager" class="com.ozonetel.occ.service.impl.RedisManagerImpl">
+        <constructor-arg>
+            <bean class="com.ozonetel.occ.dao.redis.RedisDaoImpl">
+                <constructor-arg  value="com.ozonetel.occ.model.CallQueue" />
+                <property name="pool" ref="jedisSentinelPool" />
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="redisGeneralQueueManager" class="com.ozonetel.occ.service.impl.RedisGeneralQueueManagerImpl">
+        <property name="redisCallQueueManager" ref="redisCallQueueManager" />
+    </bean>
+   
+    <bean id="redisGetNextFreeAgentService" class="com.ozonetel.occ.service.impl.RedisGetNextFreeAgentServiceImplNew" >
+        <property name="agentManager" ref="agentManager"/>
+        <property name="jedisSentinelPool" ref="jedisSentinelPool"/>
+        <property name="redisAgentManager" ref="redisAgentManager"/>
+        <property name="redisCampaignManager" ref="redisCampaignManager"/>
+        <property name="redisGeneralQueueManager" ref="redisGeneralQueueManager"/>
+        <property name="redisSkillManager" ref="redisSkillManager"/>
+    </bean>
+   
+   
+    <bean id="redisFwpNumberManager" class="com.ozonetel.occ.service.impl.RedisManagerImpl">
+        <constructor-arg>
+            <bean class="com.ozonetel.occ.dao.redis.RedisDaoImpl">
+                <constructor-arg  value="com.ozonetel.occ.model.FwpNumber" />
+                <property name="pool" ref="jedisSentinelPool" />
+            </bean>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="redisCampaignManager" class="com.ozonetel.occ.service.impl.RedisManagerImpl">
+        <constructor-arg>
+            <bean class="com.ozonetel.occ.dao.redis.RedisDaoImpl">
+                <constructor-arg  value="com.ozonetel.occ.model.Campaign" />
+                <property name="pool" ref="jedisSentinelPool" />
+            </bean>
+        </constructor-arg>
+    </bean>
+   
+    <bean id="redisSkillManager" class="com.ozonetel.occ.service.impl.RedisManagerImpl">
+        <constructor-arg>
+            <bean class="com.ozonetel.occ.dao.redis.RedisDaoImpl">
+                <constructor-arg  value="com.ozonetel.occ.model.Skill" />
+                <property name="pool" ref="jedisSentinelPool" />
+            </bean>
+        </constructor-arg>
+    </bean>
+   
+    <bean id="redisUserManager" class="com.ozonetel.occ.service.impl.RedisManagerImpl">
+        <constructor-arg>
+            <bean class="com.ozonetel.occ.dao.redis.RedisDaoImpl">
+                <constructor-arg  value="com.ozonetel.occ.model.User" />
+                <property name="pool" ref="jedisSentinelPool" />
+            </bean>
+        </constructor-arg>
+    </bean>
+    <!-- REDIS Managers -END-->
+
+    <!--CallBackManager-START-->
+    <bean id="callBackManager" class="com.ozonetel.occ.service.impl.CallBackManagerImpl">
+        <constructor-arg ref="callBackDao"/>
+        <property name="appProperty" ref="appProperty" />
+        <property name="userManager" ref="userManager" />
+    </bean>
+    <!--CallBackManager-END-->
+
+    <!--PreviewDataManager-START-->
+    <bean id="previewDataManager" class="com.ozonetel.occ.service.impl.PreviewDataManagerImpl">
+        <constructor-arg ref="previewDataDao"/>
+        <property name="campaignManager" ref="campaignManager" />
+        <property name="dialerUrl" value="${api.dialer}" />
+    </bean>
+    <!--PreviewDataManager-END-->
+
+    <!--previewDataAuditLogManager-START-->
+    <bean id="previewDataAuditLogManager" class="com.ozonetel.occ.service.impl.PreviewDataAuditLogManagerImpl">
+        <constructor-arg ref="previewDataAuditLogDao"/>
+    </bean>
+    <!--previewDataAuditLogManager-END-->
+
+    
+
+    <!--SkillManager-START-->
+    <bean id="skillManager" class="com.ozonetel.occ.service.impl.SkillManagerImpl">
+        <constructor-arg ref="skillDao"/>
+    </bean>
+    <!--SkillManager-END-->
+
+    <!--DialNumberManager-START-->
+    <bean id="dialNumberManager" class="com.ozonetel.occ.service.impl.DialNumberManagerImpl">
+        <constructor-arg ref="dialNumberDao"/>
+    </bean>
+    <!--DialNumberManager-END-->
+
+    <!--PauseReasonManager-START-->
+    <bean id="pauseReasonManager" class="com.ozonetel.occ.service.impl.PauseReasonManagerImpl">
+        <constructor-arg ref="pauseReasonDao"/>
+    </bean>
+    <!--PauseReasonManager-END-->
+
+    <!--DialOutNumberManager-START-->
+    <bean id="dialOutNumberManager" class="com.ozonetel.occ.service.impl.DialOutNumberManagerImpl">
+        <constructor-arg ref="dialOutNumberDao"/>
+    </bean>
+    <!--DialOutNumberManager-END-->
+
+    <!--LocationManager-START-->
+    <bean id="locationManager" class="com.ozonetel.occ.service.impl.LocationManagerImpl">
+        <constructor-arg ref="locationDao"/>
+    </bean>
+    <!--LocationManager-END-->
+
+    
+
+    <!--CallQueueManager-START-->
+    <bean id="callQueueManager" class="com.ozonetel.occ.service.impl.CallQueueManagerImpl">
+        <constructor-arg ref="callQueueDao"/>
+        <property name="skillManager" ref="skillManager" />
+        <property name="userManager" ref="userManager" />
+    </bean>
+    <!--CallQueueManager-END-->
+
+    <!--FwpNumberManager-START-->
+    <bean id="fwpNumberManager" class="com.ozonetel.occ.service.impl.FwpNumberManagerImpl">
+        <constructor-arg ref="fwpNumberDao"/>
+    </bean>
+    <bean id="occManager" class="com.ozonetel.occ.service.impl.OCCManagerImpl">
+        <property name="chatClientMsgSrvr" value="${url.chatClientMsgSrvr}" />
+    </bean>
+    <!--FwpNumberManager-END-->
+
+    <!--TransferNumberManager-START-->
+    <bean id="transferNumberManager" class="com.ozonetel.occ.service.impl.TransferNumberManagerImpl">
+        <constructor-arg ref="transferNumberDao"/>
+    </bean>
+    <!--TransferNumberManager-END-->
+    <!--HoldDetailManager-START-->
+    <bean id="holdDetailManager" class="com.ozonetel.occ.service.impl.HoldDetailManagerImpl">
+        <constructor-arg ref="holdDetailDao"/>
+    </bean>
+    
+    <bean id="sMSReportManager" class="com.ozonetel.occ.service.impl.GenericManagerImpl">
+        <constructor-arg>
+            <bean class="com.ozonetel.occ.dao.hibernate.GenericDaoHibernate">
+                <constructor-arg value="com.ozonetel.occ.model.SMSReport"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="sMSTemplateManager" class="com.ozonetel.occ.service.impl.SMSTemplateManagerImpl" >
+        <constructor-arg>
+            <bean class="com.ozonetel.occ.dao.hibernate.SMSTemplateDaoHibernate">
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+    
+    
+    <bean id="agentEventCacheManager" class="com.ozonetel.occ.service.impl.GenericManagerImpl">
+        <constructor-arg>
+            <bean class="com.ozonetel.occ.dao.hibernate.GenericDaoHibernate">
+                <constructor-arg value="com.ozonetel.occ.model.AgentEventCache" />
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+    <!--TransferNumberManager-END-->
+    
+    <bean id="callDropManager" class="com.ozonetel.occ.service.impl.GenericManagerImpl">
+        <constructor-arg>
+            <bean class="com.ozonetel.occ.dao.hibernate.GenericDaoHibernate">
+                <constructor-arg value="com.ozonetel.occ.model.CallDrop" />
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+    
+    <!--    <bean id="log4jInitializer" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean" >
+        <property name="staticMethod">
+            <value>org.springframework.util.Log4jConfigurer.initLogging</value>
+        </property>
+        <property name="arguments">
+            <list>
+                <value>classpath:log4j.xml</value>
+            </list>
+        </property>
+    </bean>-->
+    
+    <bean id="errorReportService" class="com.ozonetel.occ.service.impl.ErrorReportServiceImpl">
+        <property name="agentManager" ref="agentManager" />
+        <property name="reportManager" ref="reportManager" />
+    </bean>
+    
+    <!--TicketManager-START-->
+    <bean id="ticketManager" class="com.ozonetel.occ.service.impl.TicketManagerImpl">
+    </bean>
+    <!--TicketManager-END-->
+
+    <!-- Add new Managers here -->
+
+    <!-- Add new Actions here -->
+    <bean id="logFilter" class="com.ozonetel.occ.webapp.filter.LogFilter" />
+    <bean id="commandLogFilter" class="com.ozonetel.occ.webapp.filter.CommandLogFilter" />
+    <bean id="eventFilter" class="com.ozonetel.occ.webapp.filter.EventFilter" >
+        <property name="redisAgentManager" ref="redisAgentManager" />
+    </bean>
+    
+    <bean id="immediateCallbacksExecutorService" class="com.ozonetel.occ.service.impl.ImmediateCallbacksExecutorServiceImpl">
+        <property name="callbacksExecutorService" ref="callbacksExecutorService" />
+    </bean>
+    
+    <bean id="screenPopService" class="com.ozonetel.occ.service.impl.ScreenPopServiceImpl">
+        <property name="campaignManager" ref="campaignManager"/>
+        <property name="previewExtraDataManager" ref="previewExtraDataManager"/>        
+    </bean>
+    
+    <bean id="beanstalkService" class="com.ozonetel.occ.service.impl.BeanstalkServiceImpl" init-method="init" destroy-method="cleanUp">
+        <constructor-arg ref="beanstalkClientFactory" />
+        <property name="callEndTube"  value="${tube.beanstalk.callend}" />
+        <property name="liveEventsTube"  value="${tube.beanstalk.liveEvents}" />
+    </bean>
+    
+    <bean id="immediateCallbackToRedisService" class="com.ozonetel.occ.service.impl.ImmediateCallbackToRedisServiceImpl">
+        <property name="redisAgentManager" ref="redisAgentManager" />
+        <property name="campaignManager" ref="campaignManager" />
+    </bean>
+    
+    <bean id="callEventToBeanstalkService" class="com.ozonetel.occ.service.impl.CallEventToBeanstalkService">
+        <property name="beanstalkService" ref="beanstalkService" />
+        <property name="redisAgentManager" ref="redisAgentManager" />
+    </bean>
+    
+    <bean id="updateReport"  class="com.ozonetel.occ.service.impl.UpdateReport">
+        <constructor-arg ref="eventManager" />
+        <property name="callListeners">
+            <set>
+                <ref bean="immediateCallbackToRedisService" />
+                <ref bean="callEventToBeanstalkService" />
+            </set>
+        </property>
+    </bean>
+    
+    <bean id="userIntegrationManager" class="com.ozonetel.occ.service.impl.UserIntegrationManagerImpl">
+        <constructor-arg>
+            <bean class="com.ozonetel.occ.dao.hibernate.UserIntegrationDaoHibernate">
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    
+    <bean id="integrationManager" class="com.ozonetel.occ.service.impl.IntegrationManagerImpl">
+        <constructor-arg>
+            <bean class="com.ozonetel.occ.dao.hibernate.IntegrationDaoHibernate">
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+        
+    </bean>
+    
+    <bean id="chatManager" class="com.ozonetel.occ.service.impl.ChatManagerImpl">
+    </bean>
+    
+    <bean id="chatService" class="com.ozonetel.occ.service.chat.impl.ChatServiceImpl">
+        <property name="redisAgentManager" ref="redisAgentManager" />
+        <property name="agentManager" ref="agentManager" />
+        <property name="campaignManager" ref="campaignManager" />
+        <property name="chatDetailManager" ref="chatDetailManager" />
+        <property name="chatLogManager" ref="chatLogManager" />
+        <property name="eventManager" ref="eventManager" />
+        <!--<property name="occManager" ref="occManager" />-->
+        <property name="appProperty" ref="appProperty" />
+        <property name="userIntegrationManager" ref="userIntegrationManager" />
+        <property name="facebookChatService" ref="facebookChatService" />
+        <property name="userManager" ref="userManager" />
+        <property name="chatTransferService" ref="chatTransferService" />
+        <property name="chatClientMsgSrvr" value="${url.chatClientMsgSrvr}" />
+        <property name="chatMsgSenderUrl" value="${url.chatMsgSender}" />
+        <property name="skillManager" ref="skillManager" />
+    </bean>
+    
+    <bean id="chatOnCallService" class="com.ozonetel.occ.service.chat.impl.ChatOnCallServiceImpl">
+        <property name="redisAgentManager" ref="redisAgentManager" />
+        <property name="chatService" ref="chatService" />
+    </bean>    
+    <bean id="chatTransferService" class="com.ozonetel.occ.service.chat.impl.ChatTransferServiceImpl">
+        <property name="redisAgentManager" ref="redisAgentManager" />
+        <property name="campaignManager" ref="campaignManager" />
+        <property name="userManager" ref="userManager" />
+        <property name="agentManager" ref="agentManager" />
+        <property name="eventManager" ref="eventManager" />
+        <property name="chatService" ref="chatService" />
+        <property name="dispositionManager" ref="dispositionManager" />
+        <property name="agentFinderService" ref="agentFinderService"/>
+        <property name="facebookChatService" ref="facebookChatService" />
+        <property name="skillManager" ref="skillManager"/>
+    </bean>    
+    
+    <bean id="chatBotService" class="com.ozonetel.occ.service.chat.impl.ChatBotServiceImpl">
+        <!--        <property name="redisAgentManager" ref="redisAgentManager" />
+        <property name="chatLogManager" ref="chatLogManager" />
+        <property name="chatService" ref="chatService"/>
+        <property name="agentFinderService" ref="agentFinderService"/>
+        <property name="redisAgentManager" ref="redisAgentManager" />-->
+        <property name="campaignManager" ref="campaignManager" />
+        <property name="chatCallbackUrl" value="${url.chatcallback}" />
+        <property name="kookoochatbotUrl" value="${url.kookoochatbot}" />
+    </bean>
+    
+    <bean id="agentFinderService" class="com.ozonetel.occ.service.chat.impl.ChatAgentFinderServiceImpl">
+        <property name="userManager" ref="userManager" />
+        <property name="agentManager" ref="agentManager" />
+        <property name="chatBotService" ref="chatBotService" />
+        <property name="redisAgentManager" ref="redisAgentManager" />
+        <property name="campaignManager" ref="campaignManager" />
+        <property name="chatService" ref="chatService" />
+        <property name="dispositionManager" ref="dispositionManager" />
+        <property name="callQueueManager" ref="callQueueManager" />
+        <property name="eventManager" ref="eventManager" />
+        <property name="facebookChatService" ref="facebookChatService" />
+    </bean>
+    
+    <bean id="chatLogManager" class="com.ozonetel.occ.service.impl.GenericManagerImpl">
+        <constructor-arg>
+            <bean class="com.ozonetel.occ.dao.hibernate.GenericDaoHibernate">
+                <constructor-arg value="com.ozonetel.occ.model.ChatLog"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="chatDetailManager" class="com.ozonetel.occ.service.impl.GenericManagerImpl">
+        <constructor-arg>
+            <bean class="com.ozonetel.occ.dao.hibernate.GenericDaoHibernate">
+                <constructor-arg value="com.ozonetel.occ.model.ChatDetails"/>
+                <property name="sessionFactory" ref="sessionFactory"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="predictiveServiceImpl" class="com.ozonetel.occ.service.impl.PredictiveServiceImpl">
+        <property name="redisAgentManager" ref="redisAgentManager" />
+    </bean>
+    
+    <bean id="phoneNumberUtil" class="com.ozonetel.occ.util.PhoneNumberUtil">
+        <property name="campaignManager" ref="campaignManager" />
+        <property name="numberCheckUrl" value="${url.numberCheck}"/>
+        <property name="campaignConfigurationManager" ref="campaignConfigurationManager" />
+    </bean>
+    
+    <bean id="tokenServer" class="com.ozonetel.occ.service.impl.TokenServerLocalImpl">
+        <property name="webScoketServerUrl" value="${url.websocket.server}"  />
+    </bean>
+    
+    <!--IvrFlow-START-->
+    <bean id="ivrFlowDao" class="com.ozonetel.occ.dao.hibernate.IvrFlowDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <!--IvrFlow-END-->
+    
+    <!--IvrFlowManager-START-->
+    <bean id="ivrFlowManager" class="com.ozonetel.occ.service.impl.IvrFlowManagerImpl">
+        <constructor-arg ref="ivrFlowDao"/>
+    </bean>
+    <!--IvrFlowManager-END-->
+	
+    
+    <bean id="contextApplicationContextProvider" class="com.ozonetel.occ.util.ApplicationContextProvider"></bean>
+
+</beans>

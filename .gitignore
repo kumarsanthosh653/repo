@@ -1,0 +1,6 @@
+target
+.DS_Store
+.project
+.settings
+ajcore*
+prepare_patch.sh

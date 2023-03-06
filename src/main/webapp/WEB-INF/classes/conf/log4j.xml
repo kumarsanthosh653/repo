@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+<!--    <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+            value="%p [%t] %c{1}.%M(%L) | %m%n"/>
+            <param name="ConversionPattern" value="[OCCD] [%d{dd-MM-yyyy HH:mm:ss,SSS}] [%p] [%t] %X{agentMonitorUCID} %X{sessionID} %c{1}.%M(%L)  | %m%n"/>
+              value="[${webapp.name}] %p %c{1}.%M(%L) | %m%n"/> 
+                
+        </layout>
+    </appender>
+    
+    <appender name="debugLog" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="file" value="/var/log/ca_logs/jWebSocket_debug.log" />
+        <param name="Append" value="true" />
+        <param name="DatePattern" value="'.'dd-MM-yyyy"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p %X{sessionID} - %C{1}: %m%n" />
+        </layout>
+    </appender>
+    <appender name="errorLog" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="file" value="/var/log/ca_logs/jWebSocket_error.log" />
+        <param name="Append" value="true" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p - %C{1}: %m%n" />
+        </layout>
+    </appender>
+    
+    <appender name="fatalLog" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="file" value="/var/log/ca_logs/jWebSocket_fatal.log" />
+        <param name="Append" value="true" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p - %C{1}: %m%n" />
+        </layout>
+    </appender>
+    
+    <appender name="FILE" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="/var/log/ca_logs/ca.log"/>
+        <param name="Append" value="true"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                   value="[OCCD] [%d{dd-MM-yyyy HH:mm:ss,SSS}] [%p] [%t] %X{agentMonitorUCID} %X{sessionID} %c{1}.%M(%L)  | %m%n"/>
+        </layout>
+    </appender>
+    
+    
+    <logger name="net.sf.ehcache">
+        <level value="ERROR"/>
+    </logger>
+
+     Suppress success logging from InteractiveAuthenticationSuccessEvent 
+    <logger name="org.springframework.security">
+        <level value="ERROR"/>
+    </logger>
+
+    <logger name="org.apache">
+        <level value="WARN"/>
+    </logger>
+
+    <logger name="org.apache.velocity">
+        <level value="FATAL"/>
+    </logger>
+
+     Suppress invalid warning messages from JSF 
+    <logger name="org.apache.myfaces.shared_impl.renderkit.html">
+        <level value="ERROR"/>
+    </logger>
+
+    <logger name="org.hibernate">
+        <level value="WARN"/>
+    </logger>
+  
+    <logger name="org.hibernate.SQL">
+        <level value="DEBUG"/>
+    </logger>
+
+
+    <logger name="org.jwebsocket" additivity="false">
+         TRACE, DEBUG, INFO, WARN, ERROR or FATAL  
+        <level value="DEBUG"/>
+          select one of the above declared appenders 
+        <appender-ref ref="debugLog"/>
+    </logger>
+
+    <logger name="org.springframework">
+        <level value="WARN"/>
+    </logger>
+   
+    <logger name="com.ozonetel">
+        <level value="DEBUG"/>
+    </logger>
+    
+    <logger name="com.ozonetel.occ.webapp.servlet">
+        <level value="DEBUG"/>
+    </logger>
+    
+    <logger name="com.ozonetel.occ.service.impl">
+        <level value="TRACE"/>
+        <appender-ref ref="FILE"/>
+    </logger>
+
+    <logger name="com.ozonetel.occ.webapp.filter.StaticFilter">
+        <level value="INFO"/>
+    </logger>
+
+    <root>
+        <level value="DEBUG"/>
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>-->
+
+</log4j:configuration>

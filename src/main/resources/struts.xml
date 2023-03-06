@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <!-- Constants -->
+    <constant name="struts.devMode" value="false"/>
+    <constant name="struts.i18n.encoding" value="UTF-8"/>
+    <constant name="struts.action.extension" value="html"/>
+    <constant name="struts.objectFactory" value="spring"/>
+    <constant name="struts.custom.i18n.resources" value="ApplicationResources,errors"/>
+    <constant name="struts.multipart.maxSize" value="2097152"/>
+    <constant name="struts.ui.theme" value="css_xhtml"/>
+    <constant name="struts.codebehind.pathPrefix" value="/WEB-INF/pages/"/>
+    <constant name="struts.enable.SlashesInActionNames" value="true"/>
+    <constant name="struts.multipart.maxSize" value="32097152" />
+
+
+    <!-- Configuration for the default package. -->
+    <package name="default" extends="struts-default">
+        <interceptors>
+            <!-- Interceptor to handle allowing only admins to certain actions -->
+            <interceptor name="adminOnly" class="adminInterceptor"/>
+            <!-- Copied from struts-default.xml and changed validation exclude methods -->
+            <interceptor-stack name="defaultStack">
+                <interceptor-ref name="exception"/>
+                <interceptor-ref name="alias"/>
+                <interceptor-ref name="servletConfig"/>
+                <interceptor-ref name="prepare"/>
+                <interceptor-ref name="i18n"/>
+                <interceptor-ref name="chain"/>
+                <interceptor-ref name="debugging"/>
+                <interceptor-ref name="profiling"/>
+                <interceptor-ref name="scopedModelDriven"/>
+                <interceptor-ref name="modelDriven"/>
+                <interceptor-ref name="fileUpload"/>
+                <interceptor-ref name="checkbox"/>
+                <interceptor-ref name="staticParams"/>
+                <interceptor-ref name="params">
+                    <param name="excludeParams">dojo\..*</param>
+                </interceptor-ref>
+                <interceptor-ref name="conversionError"/>
+                <interceptor-ref name="validation">
+                    <param name="excludeMethods">cancel,execute,delete,edit,list,refreshTime</param>
+                </interceptor-ref>
+                <interceptor-ref name="workflow">
+                    <param name="excludeMethods">input,back,cancel,browse</param>
+                </interceptor-ref>
+            </interceptor-stack>
+            <interceptor-stack name="fileUploadStack">
+                <interceptor-ref name="fileUpload"/>
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+            <interceptor-stack name="adminCheck">
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="adminOnly"/>
+            </interceptor-stack>
+        </interceptors>
+
+        <global-results>
+            <result name="mainMenu" type="redirectAction">mainMenu</result>
+            <result name="dataAccessFailure">/WEB-INF/pages/dataAccessFailure.jsp</result>
+        </global-results>
+
+        <global-exception-mappings>
+            <exception-mapping exception="org.springframework.dao.DataAccessException" result="dataAccessFailure"/>
+        </global-exception-mappings>
+
+        <action name="redisGetNextFreeAgentAction" class="com.ozonetel.occ.webapp.action.RedisGetNextFreeAgentAction">
+            <result >/WEB-INF/pages/xmlResponse.jsp?ajax=true</result>
+        </action>
+        
+        <action name="screenPopData" class="com.ozonetel.occ.webapp.action.DataAction" method="screenPopData">
+            <result>/WEB-INF/pages/screenPopDataList.jsp</result>
+        </action>
+        
+    </package>
+    
+    
+    <package name="default-json" namespace="/" extends="json-default">
+        <interceptors>     
+            <interceptor-stack name="jsonStack">
+                <interceptor-ref name="jsonValidationWorkflowStack"/>
+                <interceptor-ref name="prepare"/>
+            </interceptor-stack>
+        </interceptors>   
+        <default-interceptor-ref name="jsonStack"/>
+        <action name="agentToolbarAction_*" method="{1}" 
+                class="com.ozonetel.occ.webapp.action.AgentToolbarAction">
+            <result type="json">
+                <param name="wrapPrefix">{"aToken":</param>
+                <param name="excludeNullProperties">true</param>
+                <param name="excludeProperties">
+                    agentLoginResponse.pauseReasons\[\d+\]\.user,
+                    transferNumberList\[\d+\]\.user,
+                    agentCallHist\[\d+\]\.user
+                </param>
+                <param name="wrapSuffix">}</param>
+            </result>
+        </action>
+        <action name="confCallback" class="com.ozonetel.occ.webapp.action.ConferenceCallbackAction">
+            <result type="json">
+                <param name="root">statusMessage</param>
+            </result>
+        </action>
+        
+        <action name="alertCallbacks" class="com.ozonetel.occ.webapp.action.CallBackAction" method="sendCallbackAlerts">
+            <result type="json">
+                <param name="root">statusMessage</param>
+            </result>
+        </action>
+      
+        <action name="incomingMessage" class="com.ozonetel.occ.webapp.action.ChatAction" method="incomingMessage">
+            <result type="json" >
+                <!--<param name="excludeNullProperties">true</param>-->
+                <param name="root">statusMessage</param>
+            </result>
+        </action>
+        <action name="ivrMsg" class="com.ozonetel.occ.webapp.action.ChatAction" method="ivrMsg">
+            <result type="json" >
+                <!--<param name="excludeNullProperties">true</param>-->
+                <param name="root">statusMessage</param>
+            </result>
+        </action>
+        <action name="chatMsgSender" class="com.ozonetel.occ.webapp.action.ChatAction" method="chatMsgSender">
+            <result type="json" >
+                <!--                <param name="excludeNullProperties">true</param>
+                <param name="excludeProperties">
+                    appProperty
+                </param>-->
+                <param name="root">statusMessage</param>
+            </result>
+        </action>
+        <action name="sendChatMsg" class="com.ozonetel.occ.webapp.action.ChatAction" method="sendMessage">
+            <result type="json">
+                <param name="root">statusMessage</param>
+            </result>
+        </action>
+        <action name="saveImage" class="com.ozonetel.occ.webapp.action.ChatAction" method="saveImage">
+            <interceptor-ref name="fileUpload">
+                <param name="allowedTypes">
+                    image/png,image/gif,image/jpeg,image/pjpeg
+                </param>
+                <param name="maximumSize">2097152</param>
+                <!--<param name="maximumSize">32097152</param>-->
+                
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result type="json" >
+                <param name="root">fileSavePath</param>
+                <!--                <param name="includeProperties">fileSavePath</param>-->
+            </result>
+        </action>
+        <action name="broadcastMsg" class="com.ozonetel.occ.webapp.action.ChatAction" method="broadcastMsg">
+            <result type="json" >
+                <param name="root">statusMessage</param>
+            </result>
+        </action>
+        <action name="agentMessageAction" class="com.ozonetel.occ.webapp.action.AgentMessageAction">
+            <result type="json">
+                <param name="wrapPrefix">{"aToken":</param>
+                <param name="excludeNullProperties">true</param>
+                <!--                <param name="root">
+                    commandResponse
+                </param>-->
+                <param name="excludeProperties">
+                    details.pauseReasons\[\d+\]\.user,
+                    details.smsTemplates\[\d+\]\.user,
+                    details.transferNumberList\[\d+\]\.user,
+                    details.agentCallHist\[\d+\]\.user
+                </param>
+                <param name="wrapSuffix">}</param>
+            </result>
+        </action>
+    </package>
+
+    <!-- Actions in this package will be prefixed with /admin/ -->
+</struts>

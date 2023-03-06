@@ -1,0 +1,11 @@
+<html>
+<body>
+Dear Customer,
+ <p>Agent <b>${agent.agentName}</b> has exceeded the configured pause time <b>${timeout}</b> for <b>${pauseReason}</b>.</p>
+
+<p>
+Thanks & Regards,<br>
+CloudAgent Support
+</p>
+</body>
+</html>
